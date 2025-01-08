@@ -1,0 +1,37 @@
+﻿@model ForecastViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<section>
+    <div class="currentCity">
+        <h2>
+            @* Current Location *@
+            @Model.TodayWeather.CityName
+        </h2>
+        <p class="fs-1">
+            @* Temperature *@
+            @Model.TodayWeather.Temperature<span class=" fw-bold">°</span>C
+        </p>
+        <p>
+            @Model.TodayWeather.WeekDay
+        </p>
+    </div>
+</section>
+
+<section>
+    <header>
+        <h2 class="fs-4">5 days forecast</h2>
+    </header>
+    <div class="row mb-4 forecastWrapper ">
+        @foreach (Forecast forecast in Model.ForecastList)
+        {
+            <div class="col-2 me-2 forecast">
+                <p class="fs-4">@forecast.Temperature<span class="fw-bold">°</span></p>
+                <P>@forecast.WeatherType</P>
+                <p>@forecast.WeekDay</p>
+            </div>
+        }
+    </div>
+</section>
