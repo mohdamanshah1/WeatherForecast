@@ -5,6 +5,7 @@
 }
 
 <section>
+
     <div class="currentCity">
         <h2>
             @* Current Location *@
@@ -18,12 +19,12 @@
             @Model.TodayWeather.WeekDay
         </p>
     </div>
+
 </section>
 
 <section>
-    <header>
-        <h2 class="fs-4">5 days forecast</h2>
-    </header>
+
+    <h2 class="fs-4">5 days forecast</h2>
     <div class="row mb-4 forecastWrapper ">
         @foreach (Forecast forecast in Model.ForecastList)
         {
@@ -34,4 +35,5 @@
             </div>
         }
     </div>
+
 </section>
