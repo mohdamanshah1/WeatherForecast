@@ -1,0 +1,20 @@
+﻿@model GeoLocationsViewModel
+@if (Model.Locations != null)
+{
+    @foreach (GeoLocationModel location in Model.Locations)
+    {
+        <li class="cities" data-latitude="@location.Latitude" data-longitude="@location.Longitude">
+            <h3 style="line-height: 1em; margin:0; margin-bottom: 4px">@location.Name</h3>
+            <p style="line-height: 1em; margin:0;">
+                @(!string.IsNullOrEmpty(location.Admin1) ? location.Admin1 + "," : "")
+                @(!string.IsNullOrEmpty(location.Admin2) ? location.Admin2 + "," : "")
+                @(!string.IsNullOrEmpty(location.Admin3) ? location.Admin3 + "," : "")
+                @(!string.IsNullOrEmpty(location.Admin4) ? location.Admin4 + "," : "")
+                @location.Country
+            </p>
+        </li>
+        <hr />
+    }
+    <script src="~/js/city.js"></script>
+}
+

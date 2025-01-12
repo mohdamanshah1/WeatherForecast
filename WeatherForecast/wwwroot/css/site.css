@@ -1,3 +1,7 @@
+:root {
+    --accent: #ddd;
+}
+
 html {
     font-size: 14px;
 }
@@ -18,27 +22,9 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
-    background-color: lightskyblue;
+    background-image: linear-gradient(#3a94d1,lightblue);
 }
 
-
-.currentCity {
-    padding: 2em;
-    border-radius: .5em;
-    background-color: white;
-    max-width: 25em;
-    margin-bottom: 1em;
-}
-
-
-.forecastWrapper {
-    background-color: white;
-    border-radius: .5em;
-    padding: 2em;
-    display: flex;
-    justify-content: space-between;
-}
 
 .forecast p {
     text-align: center;
@@ -46,4 +32,129 @@ body {
 
 footer {
     background-color: white;
+}
+
+article {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.weatherCurrent {
+    padding: 2em 6em 6em 6em;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    row-gap: .5em;
+}
+
+.currentWeatherData {
+    display: flex;
+    column-gap: 2em;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1em;
+}
+
+    .currentWeatherData p {
+        line-height: 1em;
+    }
+
+.temperature {
+    font-size: 8em;
+}
+
+
+.placeName {
+    font-size: 3em;
+}
+
+
+.otherDetails li {
+    border: 1px solid white;
+    margin-block: .5em;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sideBar {
+    padding: 3em;
+    background: rgba(0,0,0,0.4);
+    color: var(--accent);
+    overflow-y: scroll;
+}
+
+.cities {
+    position: relative;
+    cursor: pointer;
+}
+
+    .cities:hover::after {
+        content: "";
+        position: absolute;
+        left: -3em;
+        right: -3em;
+        top: -1em;
+        bottom: -1em;
+        background-color: rgba(255,255,255,0.1);
+    }
+
+hr {
+    margin-block: 1em;
+    margin-left: -3em;
+    margin-right: -3em;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+input[type=text] {
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 1em;
+    display: inline-block;
+    width: 100%;
+    padding-left: 0;
+    color: var(--accent);
+    border-bottom: 2px solid var(--accent);
+    margin-bottom: 1em;
+}
+
+    input[type=text]::placeholder {
+        color: var(--accent);
+    }
+
+    input[type=text]:hover,
+    input[type=text]:focus {
+        outline: none;
+    }
+
+
+.currentLocationButton {
+    position: fixed;
+    bottom: 2em;
+    left: 2em;
+    background: transparent;
+    border: none;
+}
+
+
+@media (max-width: 32em) {
+    html {
+        font-size: 10px;
+    }
+
+    article {
+        height: fit-content;
+        display: block;
+        padding: 1em;
+    }
+
+    .weatherCurrent {
+        padding: 0
+    }
 }

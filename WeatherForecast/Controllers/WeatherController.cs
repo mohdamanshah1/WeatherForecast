@@ -1,41 +1,27 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using WeatherForecast.Models;
-using WeatherForecast.ViewModel;
 
 namespace WeatherForecast.Controllers
 {
     public class WeatherController : Controller
     {
 
+        private IWeatherService _weatherService;
+
+        public WeatherController(IWeatherService weatherService)
+        {
+            _weatherService = weatherService;
+        }
+
         public IActionResult Index()
         {
-            Forecast Today = new Forecast()
-            {
-                CityName = "Noida",
-                Temperature = 19,
-                WeekDay = DateTime.Now.DayOfWeek.ToString(),
-                WeatherType = WeatherTypeEnum.Rainy
-            };
+            return View();
+        }
 
-            List<Forecast> forecasts = new List<Forecast>();
-
-            for (int i = 1; i <= 5; i++)
-            {
-                forecasts.Add(new Forecast()
-                {
-                    CityName = "Noida",
-                    Temperature = Random.Shared.Next(10, 20),
-                    WeekDay = DateTime.Now.AddDays(i).DayOfWeek.ToString(),
-                    WeatherType = WeatherTypeEnum.Rainy
-                });
-            }
-
-            ForecastViewModel forecastData = new ForecastViewModel();
-            forecastData.ForecastList = forecasts;
-            forecastData.TodayWeather = Today;
-
-            return View(forecastData);
+        public async Task<IActionResult> GetCurrentWeather(double latitude, double longitude)
+        {
+            CurrentWeatherModel result = await _weatherService.GetCurrentWeather(latitude, longitude);
+            return PartialView("/Views/Partial/_WeatherWidgetPartial.cshtml", result);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

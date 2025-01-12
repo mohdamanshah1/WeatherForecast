@@ -1,0 +1,48 @@
+﻿@model CurrentWeatherModel
+<div>
+    <section class="currentWeatherData">
+        <p class="temperature">
+            <strong>
+                @Model.Current.TemperatureCelsius°
+            </strong>
+        </p>
+        <div>
+            <p class="placeName">
+                <strong>
+                    @Model.Location.Name
+                </strong>
+            </p>
+            <p>
+                @Model.Current.LastUpdated
+            </p>
+        </div>
+        <div class="text-center">
+            <p>@Model.Current.Condition.Text</p>
+            <img src="@Model.Current.Condition.Icon" width="48" height="48" />
+        </div>
+    </section>
+    <section class="otherDetails">
+        <h2>
+            Weather Details
+        </h2>
+        <ul>
+            <li>
+                <span>Cloudy</span>
+                <span class="mw-auto">@Model.Current.Cloud</span>
+            </li>
+            <li>
+                <span>Humidity</span>
+                <span>@Model.Current.Humidity</span>
+            </li>
+            <li>
+                <span>Wind Direction</span>
+                <span>@Model.Current.WindDirection</span>
+            </li>
+            <li>
+                <span>Wind Speed</span>
+                <span>@Model.Current.WindKph</span>
+            </li>
+        </ul>
+    </section>
+</div>
+

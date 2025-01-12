@@ -7,7 +7,7 @@
         public string WeekDay { get; set; } = string.Empty;
         public WeatherTypeEnum WeatherType { get; set; }
     }
-    
+
     public enum WeatherTypeEnum
     {
         Rainy,
