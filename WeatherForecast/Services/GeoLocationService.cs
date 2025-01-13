@@ -5,10 +5,16 @@ namespace WeatherForecast.Services
     public class GeoLocationService : IGeoLocationService
     {
         private static readonly HttpClient _httpClient = new HttpClient();
+        private IConfiguration _configuration;
+
+        public GeoLocationService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         public async Task<GeoLocationsViewModel> GetLocations(string name)
         {
-            string endPoint = "https://geocoding-api.open-meteo.com/v1/search?";
+            string endPoint = _configuration["geoLocationEndPoint"];
             GeoLocationsViewModel geoLocations;
             try
             {

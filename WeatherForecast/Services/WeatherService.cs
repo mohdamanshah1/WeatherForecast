@@ -13,7 +13,7 @@
 
         public async Task<CurrentWeatherModel> GetCurrentWeather(double latitude, double longitude)
         {
-            string endPoint = "https://api.weatherapi.com/v1/current.json?";
+            string endPoint = _configuration["weatherEndPoint"];
 
             string? apiKey = _configuration["weatherApiKey"];
 

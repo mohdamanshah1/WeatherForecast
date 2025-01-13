@@ -55,6 +55,10 @@ function populateSuggestions(result) {
 }
 
 document.getElementById('location').addEventListener('input', e => {
+    if (!e.target.value) {
+        $('#suggestedcities').empty();
+        return;
+    }
     document.querySelector('.sideBar').scrollTo(top);
     $.ajax({
         method: 'get',
