@@ -1,5 +1,5 @@
 ﻿@model GeoLocationsViewModel
-@if (Model.Locations != null)
+@if (Model != null && Model.Locations != null)
 {
     @foreach (GeoLocationModel location in Model.Locations)
     {
@@ -17,4 +17,5 @@
     }
     <script src="~/js/city.js"></script>
 }
+
 

@@ -1,21 +1,21 @@
-﻿getLocation();
+﻿dgetLocation();
 
 
 function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showError);
+        navigator.geolocation.getCurrentPosition(getPosition, showLocationError);
     } else {
         console.log("geolocation not supported");
     }
 }
 
-function showPosition(position) {
+function getPosition(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
     getWeather(latitude, longitude);
 }
 
-function showError(error) {
+function showLocationError(error) {
     switch (error.code) {
         case error.PERMISSION_DENIED:
             toastr.error("User denied the request for Geolocation.");
@@ -31,6 +31,15 @@ function showError(error) {
             break;
     }
 }
+function showApiError(error) {
+    if (error.readyState === 0) {
+        toastr.error("something went wrong");
+        return;
+    }
+    console.log(error.status);
+    console.log(error.responseJSON.message);
+    toastr.error(error.responseJSON.message);
+}
 
 
 async function getWeather(latitude, longitude) {
@@ -40,7 +49,8 @@ async function getWeather(latitude, longitude) {
     $.ajax({
         method: 'get',
         url: url,
-        success: populateWeatherData
+        success: populateWeatherData,
+        error: showApiError
     });
 }
 
@@ -54,19 +64,26 @@ function populateSuggestions(result) {
     $('#suggestedcities').html(result);
 }
 
+
 document.getElementById('location').addEventListener('input', e => {
+
     if (!e.target.value) {
         $('#suggestedcities').empty();
         return;
     }
+
     document.querySelector('.sideBar').scrollTo(top);
     $.ajax({
         method: 'get',
         url: `geolocation/getplaces?name=${e.target.value}`,
-        success: populateSuggestions
+        success: populateSuggestions,
+        error: showApiError
     });
 });
 
 document.querySelector('.currentLocationButton').addEventListener('click', e => {
     getLocation();
 });
+
+
+

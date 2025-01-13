@@ -14,8 +14,38 @@ namespace WeatherForecast.Controllers
 
         public async Task<IActionResult> GetPlaces([FromQuery] string? name)
         {
-            GeoLocationsViewModel result = await _geoLocationService.GetLocations(name);
-            return PartialView("/Views/Partial/_CityListPartial.cshtml",result);
+            //return StatusCode(400, new { message = "you gave wrong name" });
+            GeoLocationsViewModel result;
+            try
+            {
+                if (string.IsNullOrEmpty(name))
+                {
+                    throw new ArgumentNullException(nameof(name), "no name provided");
+                }
+
+                result = await _geoLocationService.GetLocations(name);
+                return PartialView("/Views/Partial/_CityListPartial.cshtml", result);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return StatusCode(400, new { message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
+            catch (HttpRequestException ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
+            catch (JsonException ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
         }
     }
 }

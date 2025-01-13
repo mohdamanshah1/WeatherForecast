@@ -13,21 +13,46 @@
 
         public async Task<CurrentWeatherModel> GetCurrentWeather(double latitude, double longitude)
         {
-            string endPoint = _configuration["weatherEndPoint"];
+            string? endPoint = _configuration["weatherEndPoint"];
 
             string? apiKey = _configuration["weatherApiKey"];
 
-            CurrentWeatherModel currentWeather;
+            if (string.IsNullOrEmpty(endPoint) || string.IsNullOrEmpty(apiKey))
+            {
+                throw new InvalidOperationException("Weather Api key or endpoint not configured properly");
+            }
+
+            CurrentWeatherModel? currentWeather;
             try
             {
                 string finalUrl = $"{endPoint}q={latitude},{longitude}&key={apiKey}";
                 HttpResponseMessage response = await _httpClient.GetAsync(finalUrl);
-                string result = await response.Content.ReadAsStringAsync();
-                currentWeather = JsonSerializer.Deserialize<CurrentWeatherModel>(result);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    currentWeather = JsonSerializer.Deserialize<CurrentWeatherModel>(result);
+                    if (currentWeather == null)
+                    {
+                        throw new JsonException("Could not deserialise the data");
+                    }
+                }
+                else
+                {
+                    throw new HttpRequestException($"Request Failed: {response.StatusCode}, {response.ReasonPhrase}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw;
+            }
+            catch (JsonException ex)
+            {
+                throw;
             }
             catch (Exception ex)
             {
-                currentWeather = new();
+                throw;
             }
             return currentWeather;
         }
