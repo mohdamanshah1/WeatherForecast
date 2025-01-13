@@ -1,5 +1,4 @@
-﻿dgetLocation();
-
+﻿getLocation();
 
 function getLocation() {
     if (navigator.geolocation) {
